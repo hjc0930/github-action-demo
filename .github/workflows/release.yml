@@ -1,0 +1,28 @@
+name: Build React Application
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  npm-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Read repository content
+        uses: actions/checkout@v4
+
+      - name: Install dependencies and build application
+        run: |
+          npm install
+          npm run build
+
+      - name: Release
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: release
+          folder: dist
